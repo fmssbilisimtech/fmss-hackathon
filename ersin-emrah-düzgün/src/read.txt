@@ -1,0 +1,35 @@
+single responsibility prensibine uygun olarak sınıfların sorumlulukları ayrılmaya çalışıldı.
+GameManager nesnesi LAZY SINGLETON oluşturuldu.
+EA ve Konami nesneleri LAZY SINGLETON oluşturuldu.
+odeme isleminden sorumlu sınıflar LAZY SINGLETON ile oluşturuldu.
+nesne oluşumundan sorumlu CreatePaymentCompany sınıfında FACTORY METHOD kullanıldı.
+bakiye kontrolü ve istenilen oyunun listeden aranması gibi işlemlerde exception handling uygulandı.
+
+class User  -> kullanıcı bilgileri
+class FmssCompany -> kullanıcı ve oyun listesi tutuyor.
+                    setBalance() ve salerGame() metotları GameManager ile
+                    sorumluluklarını yerine getiriyor. Asıl işi class GameManager yapıyor.
+
+class GameManager -> Lazy Singleton ile oluşturuluyor.
+                    Listeden oyun arama, Fmss listesine oyun ekleme, oyun satışı sorumlulukları var.
+
+class EA ve class Konami -> oyunları üreten ve FmssCompany satışını yapan firmaları temsil ediyor.
+                            implement GameCompany  / lazy singleton ile oluşturuluyorlar
+                            sahip oldukları oyunların listesini tutuyorlar
+                            listeye oyun ekleme ve listeden oyun arama sorumlulukları var.
+
+interface PaymentCompany -> ödeme ve bakiye yükleme sorumluluklarına sahip olan sınıflar tarafından
+                            implement ediliyor.
+                            kredi kartı ile satış, eft ile satış, bakiye güncelleme, bakiye ekleme sorumlulukları var.
+
+Enum AbonePackage -> kullanıcıların sahip oldukları abone paketlerini temsil ediyor.
+                    class User kullanıyor.
+
+Enum PaidOrFree -> oyunların ücretli yada ücretsiz olma durumlarını temsil ediyor.
+                    Game interface kullanıyor
+
+Enum PaymentType -> kullanıcının ödeme tipini temsil ediyor.
+                    class FmssCompany ve class GameManager kullanıyor
+
+class AccountManager -> printInfo() metoduna sahip. kullanıcıya ait bilgilerin ekrana yazdırılmasından sorumlu.
+class CreatePaymentCompany  -> random olarak PaymentCompany üreten bir metoda sahip.
